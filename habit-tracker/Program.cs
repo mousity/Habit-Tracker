@@ -12,9 +12,12 @@ namespace habit_tracker
 
             using (var connection = new SqliteConnection(connectionString))
             {
-                connectionString.Open();
+                connection.Open();
                 var tableCommand = connection.CreateCommand();
-                
+
+                tableCommand.CommandText = "";
+                tableCommand.ExecuteNonQuery();
+                connection.Close();
             }
         }
     }
