@@ -1,0 +1,15 @@
+C:\Users\samrm\Documents\GitRepos\CsharpProjects\Habit-Tracker\habit-tracker\bin\Debug\net9.0\habit-tracker.exe
+C:\Users\samrm\Documents\GitRepos\CsharpProjects\Habit-Tracker\habit-tracker\bin\Debug\net9.0\habit-tracker.deps.json
+C:\Users\samrm\Documents\GitRepos\CsharpProjects\Habit-Tracker\habit-tracker\bin\Debug\net9.0\habit-tracker.runtimeconfig.json
+C:\Users\samrm\Documents\GitRepos\CsharpProjects\Habit-Tracker\habit-tracker\bin\Debug\net9.0\habit-tracker.dll
+C:\Users\samrm\Documents\GitRepos\CsharpProjects\Habit-Tracker\habit-tracker\bin\Debug\net9.0\habit-tracker.pdb
+C:\Users\samrm\Documents\GitRepos\CsharpProjects\Habit-Tracker\habit-tracker\obj\Debug\net9.0\habit-tracker.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\samrm\Documents\GitRepos\CsharpProjects\Habit-Tracker\habit-tracker\obj\Debug\net9.0\habit-tracker.AssemblyInfoInputs.cache
+C:\Users\samrm\Documents\GitRepos\CsharpProjects\Habit-Tracker\habit-tracker\obj\Debug\net9.0\habit-tracker.AssemblyInfo.cs
+C:\Users\samrm\Documents\GitRepos\CsharpProjects\Habit-Tracker\habit-tracker\obj\Debug\net9.0\habit-tracker.csproj.CoreCompileInputs.cache
+C:\Users\samrm\Documents\GitRepos\CsharpProjects\Habit-Tracker\habit-tracker\obj\Debug\net9.0\habit-tracker.sourcelink.json
+C:\Users\samrm\Documents\GitRepos\CsharpProjects\Habit-Tracker\habit-tracker\obj\Debug\net9.0\habit-tracker.dll
+C:\Users\samrm\Documents\GitRepos\CsharpProjects\Habit-Tracker\habit-tracker\obj\Debug\net9.0\refint\habit-tracker.dll
+C:\Users\samrm\Documents\GitRepos\CsharpProjects\Habit-Tracker\habit-tracker\obj\Debug\net9.0\habit-tracker.pdb
+C:\Users\samrm\Documents\GitRepos\CsharpProjects\Habit-Tracker\habit-tracker\obj\Debug\net9.0\habit-tracker.genruntimeconfig.cache
+C:\Users\samrm\Documents\GitRepos\CsharpProjects\Habit-Tracker\habit-tracker\obj\Debug\net9.0\ref\habit-tracker.dll
