@@ -15,9 +15,29 @@ namespace habit_tracker
                 connection.Open();
                 var tableCommand = connection.CreateCommand();
 
-                tableCommand.CommandText = "";
+                tableCommand.CommandText = @"CREATE TABLE IF NOT EXISTS drinking_water (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                ""Date"" TEXT,
+                Quantity INTEGER)";
                 tableCommand.ExecuteNonQuery();
                 connection.Close();
+            }
+        }
+
+        static void GetUserInput()
+        {
+            Console.Clear();
+            bool closeApp = false;
+            while(closeApp == false)
+            {
+                Console.WriteLine("\n\nMAIN MENU");
+                Console.WriteLine("\n What would you like to do?");
+                Console.WriteLine("\nType 0 to close the application");
+                Console.WriteLine("Type 1 to view all records");
+                Console.WriteLine("Type 2 to insert record");
+                Console.WriteLine("Type 3 to delete record");
+                Console.WriteLine("Type 4 to update record");
+                Console.WriteLine("--------------------------");
             }
         }
     }
