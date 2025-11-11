@@ -10,7 +10,6 @@ namespace habit_tracker
         static void Main(string[] args)
         {
 
-
             using (var connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
@@ -50,9 +49,9 @@ namespace habit_tracker
                         Console.WriteLine("Goodbye!");
                         closeApp = true;
                         break;
-                    // case 1:
-                    //     GetAllRecords();
-                    //     break;
+                    case 1:
+                        GetAllRecords();
+                        break;
                     case 2:
                         Insert();
                         break;
@@ -90,7 +89,6 @@ namespace habit_tracker
 
             }
 
-
         }
 
         internal static string? GetDateInput()
@@ -102,7 +100,7 @@ namespace habit_tracker
 
             return dateInput;
         }
-        
+
         internal static int? GetNumberInput()
         {
             Console.WriteLine("\n\nPlease type the number of glasses you had today, or any other unit you desire\n");
@@ -113,7 +111,65 @@ namespace habit_tracker
             int finalInput = Convert.ToInt32(numberInput);
             return finalInput;
         }
+
+        private static void GetAllRecords()
+        {
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                var tableCommand = connection.CreateCommand();
+                tableCommand.CommandText = $"SELECT * FROM drinking_water";
+                List<DrinkingWater> tableData = new List<DrinkingWater>();
+                SqliteDataReader reader = tableCommand.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        tableData.Add(
+                            new DrinkingWater
+                            {
+                                Id = reader.GetInt32(0),
+                                Date = DateTime.Parse(reader.GetString(1)),
+                                Quantity = reader.GetInt32(2)
+                            }
+                        ); ;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No entries!");
+                }
+
+                connection.Close();
+
+                Console.WriteLine("----------------------------");
+                foreach (var entry in tableData)
+                {
+                    Console.WriteLine($"{entry.Id} - {entry.Date.ToString("dd-MM-yyyy")} - Quantity: {entry.Quantity}");
+                }
+                Console.WriteLine("----------------------------");
+            }
+        }
+        
+        private static void Delete()
+        {
+            Console.Clear();
+            GetAllRecords();
+
+            Console.WriteLine("\nWhich record would you like to delete? Please type in the record ID. If you want to return to the main menu, press 0.");
+
+            int input = Convert.ToInt32(Console.ReadLine());
+
+            
+        }
     }
 
 }
 
+public class DrinkingWater
+{
+    public int Id { get; set; }
+    public DateTime Date { get; set; }
+    public int Quantity { get; set; }
+}
