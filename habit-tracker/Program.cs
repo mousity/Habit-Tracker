@@ -6,9 +6,10 @@ namespace habit_tracker
     
     class Program
     {
+        static string connectionString = @"Data Source=habit-tracker.db";
         static void Main(string[] args)
         {
-            string connectionString = @"Data Source=habit-tracker.db";
+
 
             using (var connection = new SqliteConnection(connectionString))
             {
@@ -22,6 +23,8 @@ namespace habit_tracker
                 tableCommand.ExecuteNonQuery();
                 connection.Close();
             }
+
+            GetUserInput();
         }
 
         static void GetUserInput()
@@ -39,7 +42,7 @@ namespace habit_tracker
                 Console.WriteLine("Type 4 to update record");
                 Console.WriteLine("--------------------------");
 
-                string commandInput = Console.ReadLine();
+                int commandInput = Convert.ToInt32(Console.ReadLine());
 
                 switch (commandInput)
                 {
@@ -47,18 +50,18 @@ namespace habit_tracker
                         Console.WriteLine("Goodbye!");
                         closeApp = true;
                         break;
-                    case 1:
-                        GetAllRecords();
-                        break;
+                    // case 1:
+                    //     GetAllRecords();
+                    //     break;
                     case 2:
                         Insert();
                         break;
-                    case 3:
-                        Delete();
-                        break;
-                    case 4:
-                        Update();
-                        break;
+                    // case 3:
+                    //     Delete();
+                    //     break;
+                    // case 4:
+                    //     Update();
+                    //     break;
                     default:
                         Console.WriteLine("Invalid command. Please type in a number from 0 to 4.");
                         break;
@@ -68,9 +71,11 @@ namespace habit_tracker
 
         private static void Insert()
         {
-            string date = GetDateInput();
+            string? date = GetDateInput();
+            if(date == null){ return; }
 
-            int quantity = GetNumberInput();
+            int? quantity = GetNumberInput();
+            if(quantity == null){ return; }
 
             using (var connection = new SqliteConnection(connectionString))
             {
@@ -88,22 +93,22 @@ namespace habit_tracker
 
         }
 
-        internal static string GetDateInput()
+        internal static string? GetDateInput()
         {
             Console.WriteLine("\n\nPlease insert the date: dd-mm-yy format. Type 0 to return to the main menu");
 
             string dateInput = Console.ReadLine();
-            if (dateInput == "0") { GetUserInput(); }
+            if (dateInput == "0") { return null; }
 
             return dateInput;
         }
         
-        internal static int GetNumberInput()
+        internal static int? GetNumberInput()
         {
             Console.WriteLine("\n\nPlease type the number of glasses you had today, or any other unit you desire\n");
 
             string numberInput = Console.ReadLine();
-            if (numberInput == "0") { GetUserInput(); }
+            if (numberInput == "0") { return null; }
 
             int finalInput = Convert.ToInt32(numberInput);
             return finalInput;
