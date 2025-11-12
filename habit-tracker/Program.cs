@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Microsoft.Data.Sqlite;
 
 namespace habit_tracker
@@ -58,9 +59,9 @@ namespace habit_tracker
                     case 3:
                         Delete();
                         break;
-                    // case 4:
-                    //     Update();
-                    //     break;
+                    case 4:
+                        Update();
+                        break;
                     default:
                         Console.WriteLine("Invalid command. Please type in a number from 0 to 4.");
                         break;
@@ -151,7 +152,7 @@ namespace habit_tracker
                 Console.WriteLine("----------------------------");
             }
         }
-        
+
         private static void Delete()
         {
             Console.Clear();
@@ -176,6 +177,43 @@ namespace habit_tracker
                 connection.Close();
 
             }
+        }
+        
+        private static void Update()
+        {
+            Console.Clear();
+
+            GetAllRecords();
+
+            Console.WriteLine("\nType the ID of the record you wish to change\n");
+            int input = Convert.ToInt32(Console.ReadLine());
+
+
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                var checkCommand = connection.CreateCommand();
+                checkCommand.CommandText = $"SELECT EXISTS(SELECT 1 FROM drinking_water WHERE id = {input})";
+                int checkQuery = Convert.ToInt32(checkCommand.ExecuteScalar());
+
+                if(checkQuery == 0)
+                {
+                    Console.WriteLine("\nNo records to update!\n");
+                    connection.Close();
+                }
+
+
+                string? date = GetDateInput();
+                int? quantity = GetNumberInput();
+
+                var tableCommand = connection.CreateCommand();
+                tableCommand.CommandText = $"UPDATE drinking_water SET date = '{date}', quantity = {quantity} WHERE Id = {input}";
+
+                tableCommand.ExecuteNonQuery();
+                connection.Close();
+            }
+
         }
     }
 
