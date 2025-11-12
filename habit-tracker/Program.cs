@@ -55,9 +55,9 @@ namespace habit_tracker
                     case 2:
                         Insert();
                         break;
-                    // case 3:
-                    //     Delete();
-                    //     break;
+                    case 3:
+                        Delete();
+                        break;
                     // case 4:
                     //     Update();
                     //     break;
@@ -161,7 +161,21 @@ namespace habit_tracker
 
             int input = Convert.ToInt32(Console.ReadLine());
 
-            
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                var tableCommand = connection.CreateCommand();
+                tableCommand.CommandText = $"DELETE from drinking_water WHERE id = '{input}'";
+                int rowCount = tableCommand.ExecuteNonQuery();
+
+                if (rowCount == 0)
+                {
+                    Console.WriteLine("\nNo records to delete!\n");
+                }
+
+                connection.Close();
+
+            }
         }
     }
 
