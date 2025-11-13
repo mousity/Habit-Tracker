@@ -2,26 +2,28 @@
 using System.Runtime.CompilerServices;
 using Microsoft.Data.Sqlite;
 
-namespace habit_tracker
+namespace habit_tracker // Living in a namespace to avoid conflicts
 {
     
     class Program
     {
-        static string connectionString = @"Data Source=habit-tracker.db";
-        static void Main(string[] args)
+        static string connectionString = @"Data Source=habit-tracker.db"; // String to connect to the right database
+        static void Main(string[] args) // Main
         {
 
+            // 'using' will close this at the end, making sure it's picked up by the garbage collector
             using (var connection = new SqliteConnection(connectionString))
             {
-                connection.Open();
-                var tableCommand = connection.CreateCommand();
+                connection.Open(); // Open table
+                var tableCommand = connection.CreateCommand(); // Create a command
 
+                // Set the text of the command (SQL)
                 tableCommand.CommandText = @"CREATE TABLE IF NOT EXISTS drinking_water (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 ""Date"" TEXT,
                 Quantity INTEGER)";
-                tableCommand.ExecuteNonQuery();
-                connection.Close();
+                tableCommand.ExecuteNonQuery(); // Execute (non-query) command
+                connection.Close(); // Close connection manually
             }
 
             GetUserInput();
@@ -71,10 +73,10 @@ namespace habit_tracker
 
         private static void Insert()
         {
-            string? date = GetDateInput();
+            string? date = GetDateInput(); // string? implies a variable that can either be null or an actual string
             if(date == null){ return; }
 
-            int? quantity = GetNumberInput();
+            int? quantity = GetNumberInput(); // same for int?
             if(quantity == null){ return; }
 
             using (var connection = new SqliteConnection(connectionString))
@@ -92,7 +94,7 @@ namespace habit_tracker
 
         }
 
-        internal static string? GetDateInput()
+        internal static string? GetDateInput() // ? can also be used as a return type
         {
             Console.WriteLine("\n\nPlease insert the date: dd-mm-yy format. Type 0 to return to the main menu");
 
@@ -102,36 +104,42 @@ namespace habit_tracker
             return dateInput;
         }
 
-        internal static int? GetNumberInput()
+        internal static int? GetNumberInput() 
         {
             Console.WriteLine("\n\nPlease type the number of glasses you had today, or any other unit you desire\n");
 
             string numberInput = Console.ReadLine();
             if (numberInput == "0") { return null; }
 
-            int finalInput = Convert.ToInt32(numberInput);
+            int finalInput = Convert.ToInt32(numberInput); // Converting our input into an integer
             return finalInput;
         }
 
+        // Function to view all records
         private static void GetAllRecords()
         {
-            using (var connection = new SqliteConnection(connectionString))
+            using (var connection = new SqliteConnection(connectionString)) // New connection
             {
+                // Open, create command, set text
                 connection.Open();
                 var tableCommand = connection.CreateCommand();
                 tableCommand.CommandText = $"SELECT * FROM drinking_water";
+
+                // Make a list of our data
                 List<DrinkingWater> tableData = new List<DrinkingWater>();
+                // Make the reader read every row of the table
                 SqliteDataReader reader = tableCommand.ExecuteReader();
 
-                if (reader.HasRows)
+                if (reader.HasRows) // If our reader has any rows
                 {
-                    while (reader.Read())
+                    while (reader.Read()) // While we read each row
                     {
+                        // Add the data to our DrinkingWater list
                         tableData.Add(
                             new DrinkingWater
                             {
-                                Id = reader.GetInt32(0),
-                                Date = DateTime.Parse(reader.GetString(1)),
+                                Id = reader.GetInt32(0), // 0 represents the column of our entry
+                                Date = DateTime.Parse(reader.GetString(1)), // Parsing a string as proper datetime
                                 Quantity = reader.GetInt32(2)
                             }
                         ); ;
@@ -145,7 +153,7 @@ namespace habit_tracker
                 connection.Close();
 
                 Console.WriteLine("----------------------------");
-                foreach (var entry in tableData)
+                foreach (var entry in tableData) // For every entry in the table, print it out to the console
                 {
                     Console.WriteLine($"{entry.Id} - {entry.Date.ToString("dd-MM-yyyy")} - Quantity: {entry.Quantity}");
                 }
@@ -219,6 +227,7 @@ namespace habit_tracker
 
 }
 
+// Basic class to hold entries of DrinkingWater
 public class DrinkingWater
 {
     public int Id { get; set; }
